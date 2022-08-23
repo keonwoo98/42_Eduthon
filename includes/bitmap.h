@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:39:37 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/23 21:48:01 by keokim           ###   ########.fr       */
+/*   Updated: 2022/08/23 22:18:18 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,4 @@ void WriteBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, unsig
 void CalculatePosition(int *source_x, int *source_y, int output_x, int output_y, int width, int height, double angle_rad);
 void RotatingImage(unsigned char *image, unsigned char *output, int img_width, int img_height, int angle);
 // void cvtColor(unsigned char *image, unsigned char *output, int img_width, int img_height);
-
 #endif
