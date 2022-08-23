@@ -26,8 +26,8 @@ unsigned char *LoadBitmapFile(t_file_header *fileHeader, t_info_header *infoHead
 		printf("파일로딩에 실패했습니다.\n");
 		return NULL;
 	}
-	fread(&fileHeader, sizeof(t_file_header), 1, fp);	// 비트맵파일헤더 읽기
-	fread(&infoHeader, sizeof(t_info_header), 1, fp);	// 비트맵인포헤더 읽기
+	fread(fileHeader, sizeof(t_file_header), 1, fp);	// 비트맵파일헤더 읽기
+	fread(infoHeader, sizeof(t_info_header), 1, fp);	// 비트맵인포헤더 읽기
 	printFileHeader(fileHeader);
 	fseek(fp, fileHeader->bfOffBits, SEEK_SET); // image 데이터 시작 지점으로 이동
 	unsigned char *image = (unsigned char *)malloc(sizeof(unsigned char) * infoHeader->biSizeImage); // 이미지크기만큼 메모리할당
