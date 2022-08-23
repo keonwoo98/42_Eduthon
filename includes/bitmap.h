@@ -45,8 +45,8 @@ typedef struct s_info_header
 
 #pragma pack(pop)
 
-unsigned char *LoadBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, char *filename);
-void WriteBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, unsigned char *output, char *filename);
+unsigned char *LoadBitmapFile(FILE **img, t_file_header *fileHeader, t_info_header *infoHeader, char *filename);
+void WriteBitmapFile(FILE **img, t_file_header *fileHeader, t_info_header *infoHeader, unsigned char *image, char *filename);
 void LeftRightInversion(t_info_header infoHeader, unsigned char *image);
 void UpDownInversion(t_info_header infoHeader, unsigned char *image);
 void cvtColor(unsigned char *image, t_info_header info_header);

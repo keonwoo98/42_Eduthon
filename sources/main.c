@@ -12,20 +12,19 @@
 
 #include "bitmap.h"
 
-
-
 int main(void)
 {
 	t_file_header file_header;
 	t_info_header info_header;
+	FILE *img = NULL;
 
-	unsigned char *image = LoadBitmapFile(&file_header, &info_header, "../img/castle.bmp");
+	unsigned char *image = LoadBitmapFile(&img, &file_header, &info_header, "../img/castle.bmp");
 	if (!image) {
 		return (EXIT_FAILURE);
 	}
 	// cvtColor(image, info_header);
 	// LeftRightInversion(info_header, image);
 	// imageZoom(info_header, &image, 2);
-	WriteBitmapFile(&file_header, &info_header, image, "output.bmp");
+	WriteBitmapFile(&img, &file_header, &info_header, image, "output.bmp");
 	free(image);
 }
