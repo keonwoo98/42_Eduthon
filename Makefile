@@ -6,13 +6,13 @@
 #    By: keokim <keokim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 21:45:09 by keokim            #+#    #+#              #
-#    Updated: 2022/08/23 21:51:12 by keokim           ###   ########.fr        #
+#    Updated: 2022/08/24 00:17:55 by keokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = bitmap
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 INCLUDES = -I$(HEADERS_DIRECTORY)
 
 HEADERS_LIST = bitmap.h
@@ -49,7 +49,7 @@ $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	@echo "$(BLUE).$(RESET)\c"
 
 clean:
-	@rm "output.bmp"
+	@rm -f output.bmp
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(RED)$(NAME) : $(OBJECTS_DIRECTORY) deleted$(RESET)"
 
