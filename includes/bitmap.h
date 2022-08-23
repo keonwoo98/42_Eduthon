@@ -50,4 +50,5 @@ void WriteBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, unsig
 void LeftRightInversion(t_info_header infoHeader, unsigned char *image);
 void UpDownInversion(t_info_header infoHeader, unsigned char *image);
 void cvtColor(unsigned char *image, t_info_header info_header);
+void imageZoom(t_info_header info_header, unsigned char **image, int n);
 #endif
