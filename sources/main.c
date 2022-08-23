@@ -14,16 +14,13 @@
 
 int main(void)
 {
-	BITMAPHEADER in;
-	int imgSize;
-	unsigned char *image = LoadBitmapFile(&in, &imgSize, "boat_heq.bmp");
+	t_file_header file_header;
+	t_info_header info_header;
 
-	unsigned char *output = malloc(sizeof(unsigned char) * imgSize);
+	unsigned char *image = LoadBitmapFile(&file_header, &info_header, "sample.bmp");
 
-	RotatingImage(image, output, in.bi.biWidth, in.bi.biHeight, 180);
-
-	WriteBitmapFile(in, output, imgSize, "output.bmp");
-	
+	// RotatingImage(image, output, in.bi.biWidth, in.bi.biHeight, 180);
+	// cvtColor(image, output, in.bi.biWidth, in.bi.biHeight);
+	WriteBitmapFile(&file_header, &info_header, image, "output.bmp");
 	free(image);
-	free(output);
 }

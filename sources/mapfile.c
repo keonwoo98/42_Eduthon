@@ -12,37 +12,37 @@
 
 #include "bitmap.h"
 
-unsigned char* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* imgSize, char* filename)
-{
-	FILE* fp = fopen(filename, "rb");	//파일을 이진읽기모드로 열기
-	if (fp == NULL)
-	{
-		printf("파일로딩에 실패했습니다.\n");	//fopen에 실패하면 NULL값을 리턴
-		return NULL;
-	}
-	else
-	{
-		fread(&bitmapHeader->bf, sizeof(BITMAPFILEHEADER), 1, fp);	//비트맵파일헤더 읽기
-		fread(&bitmapHeader->bi, sizeof(BITMAPINFOHEADER), 1, fp);	//비트맵인포헤더 읽기
-		fread(&bitmapHeader->hRGB, sizeof(RGBTRIPLE), 256, fp);	//색상팔렛트 읽기
-
-		int imgSizeTemp = bitmapHeader->bi.biWidth * bitmapHeader->bi.biHeight;	//이미지 사이즈 계산
-		*imgSize = imgSizeTemp;	// 이미지 사이즈를 상위 변수에 할당
-
-		unsigned char* image = (unsigned char*)malloc(sizeof(unsigned char) * imgSizeTemp);	//이미지크기만큼 메모리할당
-		fread(image, sizeof(unsigned char), imgSizeTemp, fp);//이미지 크기만큼 파일에서 읽어오기
-		fclose(fp);
-		return image;
-	}
+void printFileHeader(t_file_header *bitmapFileHeader) {
+	printf("bitmap type : %u\n", bitmapFileHeader->bfType);
+	printf("bitmap size : %u\n", bitmapFileHeader->bfSize);
+	printf("bitmap offset : %u\n", bitmapFileHeader->bfOffBits);
 }
 
-void WriteBitmapFile(BITMAPHEADER out, unsigned char* output, int imgSize, char* filename)
+unsigned char *LoadBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, char *filename)
 {
-	FILE* fp = fopen(filename, "wb");
+	FILE *fp = fopen(filename, "rb");
+	if (!fp)
+	{
+		printf("파일로딩에 실패했습니다.\n");
+		return NULL;
+	}
+	fread(fileHeader, sizeof(t_file_header), 1, fp);	// 비트맵파일헤더 읽기
+	fread(infoHeader, sizeof(t_info_header), 1, fp);	// 비트맵인포헤더 읽기
+	printFileHeader(fileHeader);
+	fseek(fp, fileHeader->bfOffBits, SEEK_SET); // image 데이터 시작 지점으로 이동
+	unsigned char *image = (unsigned char *)malloc(sizeof(unsigned char) * infoHeader->biSizeImage); // 이미지크기만큼 메모리할당
+	fread(image, sizeof(unsigned char), infoHeader->biSizeImage, fp); //이미지 크기만큼 파일에서 읽어오기
+	fclose(fp);
+	return image;
+}
 
-	fwrite(&out.bf, sizeof(BITMAPFILEHEADER), 1, fp);
-	fwrite(&out.bi, sizeof(BITMAPINFOHEADER), 1, fp);
-	fwrite(&out.hRGB, sizeof(RGBTRIPLE), 256, fp);
-	fwrite(output, sizeof(unsigned char), imgSize, fp);
+void WriteBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, unsigned char *output, char *filename)
+{
+	FILE *fp = fopen(filename, "wb");
+	
+	fwrite(fileHeader, sizeof(t_file_header), 1, fp);
+	fwrite(infoHeader, sizeof(t_info_header), 1, fp);
+	fseek(fp, fileHeader->bfOffBits, SEEK_SET);
+	fwrite(output, sizeof(unsigned char), infoHeader->biSizeImage, fp);
 	fclose(fp);
 }
