@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:39:37 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/23 21:48:01 by keokim           ###   ########.fr       */
+/*   Updated: 2022/08/23 22:18:18 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef struct tagBITMAPHEADER //비트맵 헤더를 한묶음으로
 {
 	BITMAPFILEHEADER bf;
 	BITMAPINFOHEADER bi;
-	RGBQUAD hRGB[256];
+	RGBTRIPLE hRGB[256];
 } BITMAPHEADER;
 
 #pragma pack(pop)
