@@ -6,7 +6,7 @@
 #    By: keokim <keokim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 21:45:09 by keokim            #+#    #+#              #
-#    Updated: 2022/08/24 00:17:55 by keokim           ###   ########.fr        #
+#    Updated: 2022/08/24 03:12:23 by keokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 SOURCES_DIRECTORY = ./sources/
 SOURCES_LIST =	main.c\
 				mapfile.c\
-				rotate.c
+				inversion.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = ./objects/
