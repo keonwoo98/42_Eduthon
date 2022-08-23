@@ -43,8 +43,13 @@ unsigned char *LoadBitmapFile(t_file_header *fileHeader, t_info_header *infoHead
 	fread(fileHeader, sizeof(t_file_header), 1, fp);	// 비트맵파일헤더 읽기
 	fread(infoHeader, sizeof(t_info_header), 1, fp);	// 비트맵인포헤더 읽기
 	printFileHeader(fileHeader);
+	printInfoHeader(infoHeader);
 	fseek(fp, fileHeader->bfOffBits, SEEK_SET); // image 데이터 시작 지점으로 이동
 	unsigned char *image = (unsigned char *)malloc(sizeof(unsigned char) * infoHeader->biSizeImage); // 이미지크기만큼 메모리할당
+	if (!image) {
+		fclose(fp);
+		return NULL;
+	}
 	fread(image, sizeof(unsigned char), infoHeader->biSizeImage, fp); //이미지 크기만큼 파일에서 읽어오기
 	fclose(fp);
 	return image;
