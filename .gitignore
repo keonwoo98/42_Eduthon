@@ -1,0 +1,24 @@
+.DS_Store
+.vscode
+# Prerequisites
+*.d
+
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
