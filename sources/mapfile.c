@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:46:59 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/23 21:47:00 by keokim           ###   ########.fr       */
+/*   Updated: 2022/08/23 22:18:08 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ unsigned char* LoadBitmapFile(BITMAPHEADER* bitmapHeader, int* imgSize, char* fi
 	{
 		fread(&bitmapHeader->bf, sizeof(BITMAPFILEHEADER), 1, fp);	//비트맵파일헤더 읽기
 		fread(&bitmapHeader->bi, sizeof(BITMAPINFOHEADER), 1, fp);	//비트맵인포헤더 읽기
-		fread(&bitmapHeader->hRGB, sizeof(RGBQUAD), 256, fp);	//색상팔렛트 읽기
+		fread(&bitmapHeader->hRGB, sizeof(RGBTRIPLE), 256, fp);	//색상팔렛트 읽기
 
 		int imgSizeTemp = bitmapHeader->bi.biWidth * bitmapHeader->bi.biHeight;	//이미지 사이즈 계산
 		*imgSize = imgSizeTemp;	// 이미지 사이즈를 상위 변수에 할당
@@ -42,7 +42,7 @@ void WriteBitmapFile(BITMAPHEADER out, unsigned char* output, int imgSize, char*
 
 	fwrite(&out.bf, sizeof(BITMAPFILEHEADER), 1, fp);
 	fwrite(&out.bi, sizeof(BITMAPINFOHEADER), 1, fp);
-	fwrite(&out.hRGB, sizeof(RGBQUAD), 256, fp);
+	fwrite(&out.hRGB, sizeof(RGBTRIPLE), 256, fp);
 	fwrite(output, sizeof(unsigned char), imgSize, fp);
 	fclose(fp);
 }
