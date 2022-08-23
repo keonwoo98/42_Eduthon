@@ -30,32 +30,29 @@ void printInfoHeader(t_info_header *infoHeader) {
 	printf("pixels per meter Y : %i\n", infoHeader->biYPelsPerMeter);
 }
 
-unsigned char *LoadBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, char *filename)
+unsigned char *LoadBitmapFile(FILE **img, t_file_header *fileHeader, t_info_header *infoHeader, char *filename)
 {
-	FILE *fp = NULL;
-
-	fp = fopen(filename, "rb");
-	if (!fp)
+	*img = fopen(filename, "rb");
+	if (!*img)
 	{
 		fprintf(stderr, "error: fail to open image file\n");
 		return NULL;
 	}
-	fread(fileHeader, sizeof(t_file_header), 1, fp);	// 비트맵파일헤더 읽기
-	fread(infoHeader, sizeof(t_info_header), 1, fp);	// 비트맵인포헤더 읽기
+	fread(fileHeader, sizeof(t_file_header), 1, *img);	// 비트맵파일헤더 읽기
+	fread(infoHeader, sizeof(t_info_header), 1, *img);	// 비트맵인포헤더 읽기
 	printFileHeader(fileHeader);
 	printInfoHeader(infoHeader);
-	fseek(fp, fileHeader->bfOffBits, SEEK_SET); // image 데이터 시작 지점으로 이동
+	fseek(*img, fileHeader->bfOffBits, SEEK_SET); // image 데이터 시작 지점으로 이동
 	unsigned char *image = (unsigned char *)malloc(sizeof(unsigned char) * infoHeader->biSizeImage); // 이미지크기만큼 메모리할당
 	if (!image) {
-		fclose(fp);
+		fclose(*img);
 		return NULL;
 	}
-	fread(image, sizeof(unsigned char), infoHeader->biSizeImage, fp); //이미지 크기만큼 파일에서 읽어오기
-	fclose(fp);
+	fread(image, sizeof(unsigned char), infoHeader->biSizeImage, *img); //이미지 크기만큼 파일에서 읽어오기
 	return image;
 }
 
-void WriteBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, unsigned char *image, char *filename)
+void WriteBitmapFile(FILE **img, t_file_header *fileHeader, t_info_header *infoHeader, unsigned char *image, char *filename)
 {
 	FILE *fp = fopen(filename, "wb");
 	if (!fp)
@@ -64,9 +61,19 @@ void WriteBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, unsig
 		free(image);
 		exit(EXIT_FAILURE);
 	}
-	fwrite(fileHeader, sizeof(t_file_header), 1, fp);
-	fwrite(infoHeader, sizeof(t_info_header), 1, fp);
-	fseek(fp, fileHeader->bfOffBits, SEEK_SET);
+	char *buffer = malloc(fileHeader->bfOffBits);
+	if (!buffer) {
+		fprintf(stderr, "error: memory error!\n");
+		exit(EXIT_FAILURE);
+	}
+	fseek(*img, 0, SEEK_SET);
+	fread(buffer, fileHeader->bfOffBits, 1, *img);
+
+	fseek(fp, 0, SEEK_SET);
+	fwrite(buffer, fileHeader->bfOffBits, 1, fp);
 	fwrite(image, sizeof(unsigned char), infoHeader->biSizeImage, fp);
+	
+	free(buffer);
+	fclose(*img);
 	fclose(fp);
 }
