@@ -18,10 +18,12 @@ int main(void)
 	t_info_header info_header;
 
 	unsigned char *image = LoadBitmapFile(&file_header, &info_header, "sample.bmp");
-
+	if (!image) {
+		return (EXIT_FAILURE);
+	}
+	cvtColor(image, info_header);
 	UpDownInversion(info_header, image);
 	LeftRightInversion(info_header, image);
-	// cvtColor(image, output, in.bi.biWidth, in.bi.biHeight);
 	WriteBitmapFile(&file_header, &info_header, image, "output.bmp");
 	free(image);
 }

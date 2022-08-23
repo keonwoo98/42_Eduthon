@@ -12,7 +12,7 @@
 
 NAME = bitmap
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -g
+FLAGS = -Wall -Wextra -Werror
 INCLUDES = -I$(HEADERS_DIRECTORY)
 
 HEADERS_LIST = bitmap.h
@@ -22,7 +22,8 @@ HEADERS = $(addprefix $(HEADERS_DIRECTORY), $(HEADERS_LIST))
 SOURCES_DIRECTORY = ./sources/
 SOURCES_LIST =	main.c\
 				mapfile.c\
-				inversion.c
+				inversion.c\
+				color.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = ./objects/
