@@ -6,7 +6,7 @@
 /*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:46:59 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/23 22:18:08 by keokim           ###   ########.fr       */
+/*   Updated: 2022/08/24 03:13:34 by keokim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ unsigned char *LoadBitmapFile(t_file_header *fileHeader, t_info_header *infoHead
 		printf("파일로딩에 실패했습니다.\n");
 		return NULL;
 	}
-	fread(fileHeader, sizeof(t_file_header), 1, fp);	// 비트맵파일헤더 읽기
-	fread(infoHeader, sizeof(t_info_header), 1, fp);	// 비트맵인포헤더 읽기
+	fread(fileHeader, sizeof(t_file_header), 1, fp);
+	fread(infoHeader, sizeof(t_info_header), 1, fp);
 	printFileHeader(fileHeader);
-	fseek(fp, fileHeader->bfOffBits, SEEK_SET); // image 데이터 시작 지점으로 이동
-	unsigned char *image = (unsigned char *)malloc(sizeof(unsigned char) * infoHeader->biSizeImage); // 이미지크기만큼 메모리할당
-	fread(image, sizeof(unsigned char), infoHeader->biSizeImage, fp); //이미지 크기만큼 파일에서 읽어오기
+	fseek(fp, fileHeader->bfOffBits, SEEK_SET);
+	unsigned char *image = (unsigned char *)malloc(sizeof(unsigned char) * infoHeader->biSizeImage);
+	fread(image, sizeof(unsigned char), infoHeader->biSizeImage, fp);
 	fclose(fp);
 	return image;
 }
