@@ -60,12 +60,12 @@ unsigned char	*load_bitmap_file(FILE **img, t_file_header *file_header,
 }
 
 void	write_bitmap_file(FILE **img, t_file_header *file_header,
-	t_info_header *info_header, unsigned char *image, char *filename)
+	t_info_header *info_header, unsigned char *image)
 {
 	FILE	*fp;
 	char	*buffer;
 
-	fp = fopen(filename, "wb");
+	fp = fopen("original.bmp", "wb");
 	if (!fp)
 	{
 		fprintf(stderr, "error: fail to open file\n");

@@ -12,7 +12,7 @@
 
 NAME = bitmap
 CC = gcc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -fpack-struct=1
 INCLUDES = -I$(HEADERS_DIRECTORY)
 
 HEADERS_LIST = bitmap.h

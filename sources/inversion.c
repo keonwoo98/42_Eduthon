@@ -13,7 +13,7 @@
 #include "bitmap.h"
 
 void	left_right_inversion(t_info_header info_header,
-	unsigned char *image, int x, int y)
+	unsigned char **image, int x, int y)
 {
 	int				w;
 	int				h;
@@ -23,14 +23,15 @@ void	left_right_inversion(t_info_header info_header,
 			* info_header.bi_size_image);
 	w = info_header.bi_width * 3;
 	h = info_header.bi_height;
-	memcpy(copy, image, info_header.bi_size_image);
+	memcpy(copy, *image, info_header.bi_size_image);
 	while (y < h)
 	{
+		x = 0;
 		while (x < w)
 		{
-			image[y * w + x] = copy[y * w + w - x - 3];
-			image[y * w + x + 1] = copy[y * w + w - x - 2];
-			image[y * w + x + 2] = copy[y * w + w - x - 1];
+			(*image)[y * w + x] = copy[y * w + w - x - 3];
+			(*image)[y * w + x + 1] = copy[y * w + w - x - 2];
+			(*image)[y * w + x + 2] = copy[y * w + w - x - 1];
 			x += 3;
 		}
 		y++;
@@ -39,7 +40,7 @@ void	left_right_inversion(t_info_header info_header,
 }
 
 void	up_down_inversion(t_info_header info_header,
-	unsigned char *image, int x, int y)
+	unsigned char **image, int x, int y)
 {
 	int				w;
 	int				h;
@@ -49,15 +50,16 @@ void	up_down_inversion(t_info_header info_header,
 	h = info_header.bi_height;
 	copy = (unsigned char *)malloc(sizeof(unsigned char)
 			* info_header.bi_size_image);
-	memcpy(copy, image, info_header.bi_size_image);
+	memcpy(copy, *image, info_header.bi_size_image);
 	while (y < h)
 	{
+		x = 0;
 		while (x < w)
 		{
-			image[y * w + x] = copy[(h - y - 1) * w + x];
-			image[y * w + x + 1] = copy[(h - y - 1) * w + x + 1];
+			(*image)[y * w + x] = copy[(h - y - 1) * w + x];
+			(*image)[y * w + x + 1] = copy[(h - y - 1) * w + x + 1];
 			x += 3;
-			image[y * w + x + 2] = copy[(h - y - 1) * w + x + 2];
+			(*image)[y * w + x + 2] = copy[(h - y - 1) * w + x + 2];
 		}
 		y++;
 	}
