@@ -1,12 +1,13 @@
-# **42 Eduthon**
+# 👾 **MiniCV**
 
-## 📝 **Project Name**
+42Seoul Dash Project Team **La(라)**
 
-- **MiniCV**
+This project will offer you an opportunity to learn about bitmap structure and image processing basics.
 
-## 👨‍👨‍👦 **Team Name**
-
-- **Ra (라)**
+##  👨‍👨‍👦 **Team Members**
+- keokim (Leader)
+- hyopark
+- minjkim2
 
 ## 🏁 **Getting Started**
 
@@ -15,9 +16,9 @@
 
 ## 👩‍💻 **Tester Usage**
 
-- Move `tester.sh` to your project file.
+- Move `tester.sh` and `img` folder to your project directory.
 - `./test.sh` will compile your files and test your codes.
 
 &nbsp;
 
-**Good Lock!!👍**
+**Good Lock and have Fun!👍**
