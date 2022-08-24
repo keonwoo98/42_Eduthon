@@ -26,8 +26,9 @@ int	main(void)
 		return (EXIT_FAILURE);
 	}
 	cvt_color(image, info_header);
-	left_right_inversion(info_header, image, 0, 0);
+	left_right_inversion(info_header, &image, 0, 0);
+	up_down_inversion(info_header, &image, 0, 0);
 	image_zoom(info_header, &image, 2);
-	write_bitmap_file(&img, &file_header, &info_header, image, "output.bmp");
+	write_bitmap_file(&img, &file_header, &info_header, image);
 	free(image);
 }

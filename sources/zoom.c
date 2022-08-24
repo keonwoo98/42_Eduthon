@@ -19,11 +19,11 @@ void	image_zoom(t_info_header info_header, unsigned char **image, int n)
 	int				x;
 
 	tmp = malloc(info_header.bi_size_image);
-	up_down_inversion(info_header, *image, 0, 0);
-	x = 0;
+	up_down_inversion(info_header, image, 0, 0);
 	y = 0;
 	while (y < info_header.bi_height)
 	{
+		x = 0;
 		while (x < info_header.bi_width * 3)
 		{
 			tmp[y * info_header.bi_width * 3 + x] = (*image)[y
@@ -38,5 +38,5 @@ void	image_zoom(t_info_header info_header, unsigned char **image, int n)
 	}
 	free(*image);
 	*image = tmp;
-	up_down_inversion(info_header, *image, 0, 0);
+	up_down_inversion(info_header, image, 0, 0);
 }
