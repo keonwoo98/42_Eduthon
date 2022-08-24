@@ -51,7 +51,7 @@ $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	@echo "$(BLUE).$(RESET)\c"
 
 clean:
-	@rm -f output.bmp
+	@rm -f original.bmp
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(RED)$(NAME) : $(OBJECTS_DIRECTORY) deleted$(RESET)"
 
