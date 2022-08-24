@@ -3,70 +3,79 @@
 /*                                                        :::      ::::::::   */
 /*   mapfile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyopark <hyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:46:59 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/24 03:13:34 by keokim           ###   ########.fr       */
+/*   Updated: 2022/08/24 09:07:11 by hyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bitmap.h"
 
-void printFileHeader(t_file_header *fileHeader) {
-	printf("bitmap type : %u\n", fileHeader->bfType);
-	printf("bitmap size : %u\n", fileHeader->bfSize);
-	printf("bitmap offset : %u\n", fileHeader->bfOffBits);
-}
-
-void printInfoHeader(t_info_header *infoHeader) {
-	printf("header size : %u\n", infoHeader->biSize);
-	printf("image width : %i\n", infoHeader->biWidth);
-	printf("image height : %i\n", infoHeader->biHeight);
-	printf("color planes : %u\n", infoHeader->biPlanes);
-	printf("pixel bits : %u\n", infoHeader->biBitCount);
-	printf("compression : %u\n", infoHeader->biCompression);
-	printf("pixel data size : %u\n", infoHeader->biSizeImage);
-	printf("pixels per meter X : %i\n", infoHeader->biXPelsPerMeter);
-	printf("pixels per meter Y : %i\n", infoHeader->biYPelsPerMeter);
-}
-
-unsigned char *LoadBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, char *filename)
+void	print_file_header(t_file_header *file_header)
 {
-	FILE *fp = NULL;
+	printf("bitmap type : %u\n", file_header->bf_type);
+	printf("bitmap size : %u\n", file_header->bf_size);
+	printf("bitmap offset : %u\n", file_header->bf_off_bits);
+}
+
+void	print_info_header(t_info_header *info_header)
+{
+	printf("header size : %u\n", info_header->bi_size);
+	printf("image width : %i\n", info_header->bi_width);
+	printf("image height : %i\n", info_header->bi_height);
+	printf("color planes : %u\n", info_header->bi_planes);
+	printf("pixel bits : %u\n", info_header->bi_bit_count);
+	printf("compression : %u\n", info_header->bi_compression);
+	printf("pixel data size : %u\n", info_header->bi_size_image);
+	printf("pixels per meter X : %i\n", info_header->bi_x_pels_per_meter);
+	printf("pixels per meter Y : %i\n", info_header->bi_y_pels_per_meter);
+}
+
+unsigned char	*load_bitmap_file(t_file_header *file_header,
+	t_info_header *info_header, char *filename)
+{
+	FILE			*fp;
+	unsigned char	*image;
 
 	fp = fopen(filename, "rb");
 	if (!fp)
 	{
 		fprintf(stderr, "error: fail to open image file\n");
-		return NULL;
+		return (NULL);
 	}
-	fread(fileHeader, sizeof(t_file_header), 1, fp);	// 비트맵파일헤더 읽기
-	fread(infoHeader, sizeof(t_info_header), 1, fp);	// 비트맵인포헤더 읽기
-	printFileHeader(fileHeader);
-	printInfoHeader(infoHeader);
-	fseek(fp, fileHeader->bfOffBits, SEEK_SET); // image 데이터 시작 지점으로 이동
-	unsigned char *image = (unsigned char *)malloc(sizeof(unsigned char) * infoHeader->biSizeImage); // 이미지크기만큼 메모리할당
-	if (!image) {
+	fread(file_header, sizeof(t_file_header), 1, fp);
+	fread(info_header, sizeof(t_info_header), 1, fp);
+	print_file_header(file_header);
+	print_info_header(info_header);
+	fseek(fp, file_header->bf_off_bits, SEEK_SET);
+	image = (unsigned char *)malloc(sizeof(unsigned char)
+			* info_header->bi_size_image);
+	if (!image)
+	{
 		fclose(fp);
-		return NULL;
+		return (NULL);
 	}
-	fread(image, sizeof(unsigned char), infoHeader->biSizeImage, fp); //이미지 크기만큼 파일에서 읽어오기
+	fread(image, sizeof(unsigned char), info_header->bi_size_image, fp);
 	fclose(fp);
-	return image;
+	return (image);
 }
 
-void WriteBitmapFile(t_file_header *fileHeader, t_info_header *infoHeader, unsigned char *image, char *filename)
+void	write_bitmap_file(t_file_header *file_header,
+	t_info_header *info_header, unsigned char *image, char *filename)
 {
-	FILE *fp = fopen(filename, "wb");
+	FILE	*fp;
+
+	fp = fopen(filename, "wb");
 	if (!fp)
 	{
 		fprintf(stderr, "error: fail to open file\n");
 		free(image);
 		exit(EXIT_FAILURE);
 	}
-	fwrite(fileHeader, sizeof(t_file_header), 1, fp);
-	fwrite(infoHeader, sizeof(t_info_header), 1, fp);
-	fseek(fp, fileHeader->bfOffBits, SEEK_SET);
-	fwrite(image, sizeof(unsigned char), infoHeader->biSizeImage, fp);
+	fwrite(file_header, sizeof(t_file_header), 1, fp);
+	fwrite(info_header, sizeof(t_info_header), 1, fp);
+	fseek(fp, file_header->bf_off_bits, SEEK_SET);
+	fwrite(image, sizeof(unsigned char), info_header->bi_size_image, fp);
 	fclose(fp);
 }

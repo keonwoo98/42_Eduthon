@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keokim <keokim@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyopark <hyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:47:04 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/24 03:15:07 by keokim           ###   ########.fr       */
+/*   Updated: 2022/08/24 09:08:49 by hyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "bitmap.h"
 
-
-
-int main(void)
+int	main(void)
 {
-	t_file_header file_header;
-	t_info_header info_header;
+	t_file_header	file_header;
+	t_info_header	info_header;
+	unsigned char	*image;
 
-	unsigned char *image = LoadBitmapFile(&file_header, &info_header, "../img/castle.bmp");
-	if (!image) {
+	image = load_bitmap_file(&file_header, &info_header, "sample.bmp");
+	if (!image)
+	{
 		return (EXIT_FAILURE);
 	}
-	// cvtColor(image, info_header);
-	// LeftRightInversion(info_header, image);
-	// imageZoom(info_header, &image, 2);
-	WriteBitmapFile(&file_header, &info_header, image, "output.bmp");
+	cvt_color(image, info_header);
+	left_right_inversion(info_header, image, 0, 0);
+	image_zoom(info_header, &image, 2);
+	write_bitmap_file(&file_header, &info_header, image, "output.bmp");
 	free(image);
 }

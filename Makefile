@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: keokim <keokim@student.42.fr>              +#+  +:+       +#+         #
+#    By: hyopark <hyopark@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 21:45:09 by keokim            #+#    #+#              #
-#    Updated: 2022/08/24 03:12:23 by keokim           ###   ########.fr        #
+#    Updated: 2022/08/24 09:06:22 by hyopark          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ SOURCES_DIRECTORY = ./sources/
 SOURCES_LIST =	main.c\
 				mapfile.c\
 				inversion.c\
-				color.c
+				color.c\
+				zoom.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = ./objects/
