@@ -6,7 +6,7 @@
 /*   By: hyopark <hyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:39:37 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/24 09:09:30 by hyopark          ###   ########.fr       */
+/*   Updated: 2022/08/24 09:18:05 by hyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ typedef struct s_info_header
 
 # pragma pack(pop)
 
-unsigned char	*load_bitmap_file(t_file_header *fileHeader,
+unsigned char	*load_bitmap_file(FILE **img, t_file_header *fileHeader,
 					t_info_header *infoHeader, char *filename);
-void			write_bitmap_file(t_file_header *fileHeader,
+void			write_bitmap_file(FILE **img, t_file_header *fileHeader,
 					t_info_header *infoHeader,
 					unsigned char *output, char *filename);
 void			left_right_inversion(t_info_header infoHeader,

@@ -6,7 +6,7 @@
 /*   By: hyopark <hyopark@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/23 21:46:59 by keokim            #+#    #+#             */
-/*   Updated: 2022/08/24 09:07:11 by hyopark          ###   ########.fr       */
+/*   Updated: 2022/08/24 09:37:27 by hyopark          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,39 +32,38 @@ void	print_info_header(t_info_header *info_header)
 	printf("pixels per meter Y : %i\n", info_header->bi_y_pels_per_meter);
 }
 
-unsigned char	*load_bitmap_file(t_file_header *file_header,
+unsigned char	*load_bitmap_file(FILE **img, t_file_header *file_header,
 	t_info_header *info_header, char *filename)
 {
-	FILE			*fp;
 	unsigned char	*image;
 
-	fp = fopen(filename, "rb");
-	if (!fp)
+	*img = fopen(filename, "rb");
+	if (!*img)
 	{
 		fprintf(stderr, "error: fail to open image file\n");
 		return (NULL);
 	}
-	fread(file_header, sizeof(t_file_header), 1, fp);
-	fread(info_header, sizeof(t_info_header), 1, fp);
+	fread(file_header, sizeof(t_file_header), 1, *img);
+	fread(info_header, sizeof(t_info_header), 1, *img);
 	print_file_header(file_header);
 	print_info_header(info_header);
-	fseek(fp, file_header->bf_off_bits, SEEK_SET);
+	fseek(*img, file_header->bf_off_bits, SEEK_SET);
 	image = (unsigned char *)malloc(sizeof(unsigned char)
 			* info_header->bi_size_image);
 	if (!image)
 	{
-		fclose(fp);
+		fclose(*img);
 		return (NULL);
 	}
-	fread(image, sizeof(unsigned char), info_header->bi_size_image, fp);
-	fclose(fp);
+	fread(image, sizeof(unsigned char), info_header->bi_size_image, *img);
 	return (image);
 }
 
-void	write_bitmap_file(t_file_header *file_header,
+void	write_bitmap_file(FILE **img, t_file_header *file_header,
 	t_info_header *info_header, unsigned char *image, char *filename)
 {
 	FILE	*fp;
+	char	*buffer;
 
 	fp = fopen(filename, "wb");
 	if (!fp)
@@ -73,9 +72,18 @@ void	write_bitmap_file(t_file_header *file_header,
 		free(image);
 		exit(EXIT_FAILURE);
 	}
-	fwrite(file_header, sizeof(t_file_header), 1, fp);
-	fwrite(info_header, sizeof(t_info_header), 1, fp);
-	fseek(fp, file_header->bf_off_bits, SEEK_SET);
+	buffer = malloc(file_header->bf_off_bits);
+	if (!buffer)
+	{
+		fprintf(stderr, "error: memory error!\n");
+		exit(EXIT_FAILURE);
+	}
+	fseek(*img, 0, SEEK_SET);
+	fread(buffer, file_header->bf_off_bits, 1, *img);
+	fseek(fp, 0, SEEK_SET);
+	fwrite(buffer, file_header->bf_off_bits, 1, fp);
 	fwrite(image, sizeof(unsigned char), info_header->bi_size_image, fp);
+	free(buffer);
+	fclose(*img);
 	fclose(fp);
 }
