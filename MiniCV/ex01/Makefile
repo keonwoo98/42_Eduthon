@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyopark <hyopark@student.42.fr>            +#+  +:+       +#+         #
+#    By: keokim <keokim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/23 21:45:09 by keokim            #+#    #+#              #
-#    Updated: 2022/08/24 09:06:22 by hyopark          ###   ########.fr        #
+#    Updated: 2022/09/12 19:32:48 by keokim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	@echo "$(BLUE).$(RESET)\c"
 
 clean:
-	@rm -f orginal.bmp
+	@rm -f original.bmp
 	@rm -rf $(OBJECTS_DIRECTORY)
 	@echo "$(RED)$(NAME) : $(OBJECTS_DIRECTORY) deleted$(RESET)"
 

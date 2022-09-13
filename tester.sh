@@ -137,3 +137,7 @@ then
 fi
 
 printf "\n${GREEN}Test all passed :)${RESET} ✅\n"
+
+rm -f zoom zoom.bmp && rm -rf objects &&
+cd ../ex01 && rm -f reverse original.bmp && rm -rf objects &&
+cd ../ex00 && rm -f RGB2BGR original.bmp && rm -rf objects
