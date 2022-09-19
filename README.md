@@ -2,7 +2,7 @@
 
 42Seoul Dash Project Team **La(라)**
 
-This project will offer you an opportunity to learn about bitmap structure and image processing basics.
+This project will give you an opportunity to learn about bitmap structure and basics of image processing.
 
 ##  👨‍👨‍👦 **Team Members**
 - keokim (Leader)
